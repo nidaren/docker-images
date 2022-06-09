@@ -1,8 +1,7 @@
 FROM        debian:buster-slim
 
 LABEL       author="Rafal Lukasik" maintainer="rafal@nidaren.net"
-LABEL       org.opencontainers.image.source="https://github.com/nidaren/docker-images/pterodactyl"
-LABEL       org.opencontainers.image.licenses=MIT
+LABEL       org.opencontainers.image.source="https://github.com/nidaren/docker-images"
 
 COPY        ["./files/entrypoint.sh", "./files/libSQLite.Interop.dll.so", "./files/Chronicler.eco", "./"]
 
@@ -57,11 +56,11 @@ RUN         apt update && apt upgrade -y && apt install -y --no-install-recommen
 			   && update-locale lang=en_US.UTF-8 \ 
 			   && dpkg-reconfigure --frontend noninteractive locales \ 
 			   && useradd -m -d /home/container -s /bin/bash container \ 
-			   && mkdir -p /home/container/Configs \ 
-			   && mkdir -p /home/container/Storage \ 
+			   && mkdir -p /mnt/server/Configs \ 
+			   && mkdir -p /mnt/server/Storage \ 
 			   && cp /libSQLite.Interop.dll.so /usr/lib \ 
-			   && cp /Chronicler.eco /home/container/Configs \ 
-			   && chown -R container:container /home/container \ 
+			   && chmod +x /entrypoint.sh \
+			   && cp /Chronicler.eco /mnt/server/Configs \ 
 			   && rm /libSQLite.Interop.dll.so \ 
 			   && rm /Chronicler.eco
 

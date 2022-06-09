@@ -2,5 +2,5 @@
   "RecordEvents": true,
   "PerformanceCounterInterval": 15,
   "LogLevel": "Information",
-  "DatabaseName": "/home/container/Storage/Chronicle"
+  "DatabaseName": "/mnt/server/Storage/Chronicle"
 }

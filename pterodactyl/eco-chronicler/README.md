@@ -1,9 +1,5 @@
 # eco-chronicler
 
-<b><u>Please note:</b></u> Image contains all needed prerequisites to run Chronicler with Eco, but
-the plugin itself as well as any additional files need to be downloaded and added as per Pterodactyl's
-requirements.
-
 <u>Content:</u>
 <br>`files` folder contains all the objects needed to build the image.
 
