@@ -13,7 +13,7 @@ available in Pterodactyl eggs library <i>by default</i>.<br>
 It adds required Linux shared objects to enable running of Chronicler plugin, which would otherwise crash,
 reporting missing libraries.
 <br>
-Select <i>Custom Image</i> and paste the link [www.google.com](https://www.google.com) to use 
+Select <i>Custom Image</i> and paste the link <b>nidaren/pterodactyl:eco-chronicler</b> to use 
 this image with the default Eco egg.
 
 # <u>Standalone</u>
