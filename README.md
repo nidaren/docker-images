@@ -15,11 +15,3 @@ reporting missing libraries.
 <br>
 Select <i>Custom Image</i> and paste the link <b>nidaren/pterodactyl:eco-chronicler</b> to use 
 this image with the default Eco egg.
-
-# <u>Standalone</u>
-
-Images that run their services and game servers <i>independently</i>, with no additional requirements.
-
-
-
-
