@@ -4,7 +4,7 @@
 
 - `build-docker-image.sh` - builds the image.
 - `docker-compose.yml`- sample configuration of the image.
-- 'Dockerfile' :)
+- `Dockerfile` :)
 
 `files` folder contains all the objects needed to build the image.
 
