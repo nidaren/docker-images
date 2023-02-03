@@ -1,0 +1,1 @@
+docker build -t nidaren/eco-server:environment .

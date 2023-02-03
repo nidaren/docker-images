@@ -1,7 +1,10 @@
 FROM        debian:buster-slim
 
-LABEL       author="Rafal Lukasik" maintainer="rafal@nidaren.net"
+LABEL       org.opencontainers.image.authors="rafal@nidaren.net"
 LABEL       org.opencontainers.image.source="https://github.com/nidaren/docker-images"
+LABEL       org.opencontainers.image.version="1.2"
+LABEL       org.opencontainers.image.vendor="discord.nidaren.net"
+LABEL       org.opencontainers.image.description="Eco Server container by nidaren."
 
 COPY        ["./files/entrypoint.sh", "./files/libSQLite.Interop.dll.so", "./files/Chronicler.eco", "./"]
 
