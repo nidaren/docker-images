@@ -22,7 +22,7 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
                zlib1g \
                lib32gcc1 \
                wget \
-	           locales \
+	       locales \
             && useradd -m -d /home/container -s /bin/bash container \
             && wget --no-check-certificate https://aka.ms/dotnet-counters/linux-x64 -O /usr/bin/dotnet-counters \
             && wget --no-check-certificate https://aka.ms/dotnet-dump/linux-x64 -O /usr/bin/dotnet-dump \
@@ -35,6 +35,12 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
                -O packages-microsoft-prod.deb \
             && dpkg -i packages-microsoft-prod.deb \
             && rm packages-microsoft-prod.deb \
+            && mkdir /opt/profiling \
+            && wget --no-check-certificate \
+               https://download.jetbrains.com/resharper/dotUltimate.2022.3.2/JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz\
+               -O JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
+            && tar -zxvf JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
+            && rm JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
             && apt update -y \
             && apt install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus steamcmd \
             && update-locale lang=en_US.UTF-8 \
@@ -50,7 +56,7 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
             && chown -R container:container /home/container
 
 USER        container
-ENV         USER=container HOME=/home/container VERSION_BRANCH=release UPDATE_SERVER=true STEAM_FEEDBACK=false
+ENV         USER=container HOME=/home/container VERSION_BRANCH=release UPDATE_SERVER=true STEAM_FEEDBACK=false PATH="${PATH}:/opt/profiling"
 
 WORKDIR     /home/container
 

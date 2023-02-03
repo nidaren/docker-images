@@ -1,6 +1,13 @@
 #!/bin/bash
 cd /home/container
 
+FILE=/home/container/server/Mods/Chronicler/SQLite.Interop.dll
+
+if [ -f "$FILE" ]; then
+    echo -e "${YELLOW}Redundant Interlop dll removed from Chronicler.${ENDCOLOR}"
+    rm "$FILE"
+fi
+
 # Make internal Docker IP address available to processes.
 export INTERNAL_IP=`ip route get 1 | awk '{print $NF;exit}'`
 

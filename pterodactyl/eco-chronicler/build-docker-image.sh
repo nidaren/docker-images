@@ -1,0 +1,1 @@
+docker build -t nidaren/pterodactyl:eco-chronicler .
