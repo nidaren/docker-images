@@ -2,16 +2,21 @@ FROM        debian:buster-slim
 
 COPY        ["./files", "/tmp/files"]
 
-LABEL       org.opencontainers.image.authors="rafal@nidaren.net"
-LABEL       org.opencontainers.image.source="https://github.com/nidaren/docker-images"
-LABEL       org.opencontainers.image.version="1.2"
-LABEL       org.opencontainers.image.vendor="discord.nidaren.net"
-LABEL       org.opencontainers.image.description="Eco Server container by nidaren."
+ARG         BUILD_DATE
+
+LABEL       org.label-schema.schema-version="1.0"
+LABEL       org.label-schema.build-date=$BUILD_DATE
+LABEL       org.label-schema.name="ECO Server"
+LABEL       org.label-schema.description="Eco Server container by nidaren."
+LABEL       org.label-schema.url="https://discord.nidaren.net"
+LABEL       org.label-schema.vcs-url="https://github.com/nidaren/docker-images"
+LABEL       org.label-schema.vendor="nidaren"
+LABEL       org.label-schema.version="1.3"
 
 RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-architecture i386 \
             && echo steam steam/question select "I AGREE" | debconf-set-selections \
     	    && echo steam steam/license note '' | debconf-set-selections \
-            && apt update && apt upgrade -y && apt install -y --no-install-recommends \
+            && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
                ca-certificates \
                libc6 \
                libgcc1 \
@@ -41,8 +46,13 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
                -O JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
             && tar -zxvf JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
             && rm JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
-            && apt update -y \
-            && apt install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus steamcmd \
+            && wget --no-check-certificate \
+                https://download.jetbrains.com/resharper/dotUltimate.2022.3.2/JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -O JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
+            && tar -zxvf JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
+            && rm JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
+            && apt-get update -y \
+            && apt-get install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus steamcmd \
+            && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
             && update-locale lang=en_US.UTF-8 \
             && dpkg-reconfigure --frontend noninteractive locales \
             && rm -rf /var/lib/apt/lists/* \
@@ -53,6 +63,7 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
             && mkdir -p /home/container/steamcmd \
             && mkdir -p /home/container/steamapps \
             && mkdir -p /home/container/server \
+            && cd /home/container \
             && chown -R container:container /home/container
 
 USER        container

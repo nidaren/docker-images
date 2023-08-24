@@ -4,7 +4,7 @@ services:
   eco-server-environment:
     container_name: eco-server-env
     image: nidaren/eco-server:environment
-    restart: unless-stopped
+    restart: "no"
     # comment out both stdin_opn and tty if you don't need these functionalities.
     # both work in detached mode (-d) when attaching to the container
     stdin_open: true # interactive: allows to input keyboard commands to the container in (-d) detached mode.
@@ -19,7 +19,7 @@ services:
     environment:
       VERSION_BRANCH: release # release, playtest, staging - version of the server to download
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
-      STEAM_FEEDBACK: false # steamcmd output in console, when false it saves it to Logs/latestSteam.log
+      STEAM_FEEDBACK: true # steamcmd output in console, when false it saves it to Logs/latestSteam.log
     ports:
       # Ports to be assigned in format host:container
       - "3000:3000/udp" # GameServerPort from Network.eco

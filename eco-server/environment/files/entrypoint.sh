@@ -29,10 +29,10 @@ runSteam()
     echo -e "${YELLOW}Steam completed its operations.${ENDCOLOR}"
 }
 
-case $VERSION_BRANCH in
-    release|staging|playtest) echo -e "${YELLOW}Selected branch is:${ENDCOLOR} ${BLUE}$VERSION_BRANCH${ENDCOLOR}" ;;
-    *) echo "VERSION_BRANCH must be: release, staging or playtest." && exit 1 ;;
-esac
+#case $VERSION_BRANCH in
+#    release|staging|playtest) echo -e "${YELLOW}Selected branch is:${ENDCOLOR} ${BLUE}$VERSION_BRANCH${ENDCOLOR}" ;;
+#    *) echo "VERSION_BRANCH must be: release, staging or playtest." && exit 1 ;;
+#esac
 
 if [ ! -f "$EcoServer" ]; then
     echo -e "${YELLOW}EcoServer does not exist. Will download.${ENDCOLOR}"
