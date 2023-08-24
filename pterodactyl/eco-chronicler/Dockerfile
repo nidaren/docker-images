@@ -1,14 +1,20 @@
 FROM        debian:buster-slim
 
-LABEL       org.opencontainers.image.authors="rafal@nidaren.net"
-LABEL       org.opencontainers.image.source="https://github.com/nidaren/docker-images"
-LABEL       org.opencontainers.image.version="1.2"
-LABEL       org.opencontainers.image.vendor="discord.nidaren.net"
-LABEL       org.opencontainers.image.description="Eco Server container by nidaren."
+ARG         BUILD_DATE
+
+LABEL       org.label-schema.schema-version="1.0"
+LABEL       org.label-schema.build-date=$BUILD_DATE
+LABEL       org.label-schema.name="ECO Server"
+LABEL       org.label-schema.description="Eco Server container by nidaren."
+LABEL       org.label-schema.url="https://discord.nidaren.net"
+LABEL       org.label-schema.vcs-url="https://github.com/nidaren/docker-images"
+LABEL       org.label-schema.vendor="nidaren"
+LABEL       org.label-schema.version="1.3"
 
 COPY        ["./files/entrypoint.sh", "./files/libSQLite.Interop.dll.so", "./"]
 
-RUN         apt update && apt upgrade -y && apt install -y --no-install-recommends \
+RUN         DEBIAN_FRONTEND=noninteractive \
+            apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
                gcc \ 
 	       g++ \ 
 	       libgcc1 \ 
@@ -62,14 +68,19 @@ RUN         apt update && apt upgrade -y && apt install -y --no-install-recommen
                 -O JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
             && tar -zxvf JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
             && rm JetBrains.dotTrace.CommandLineTools.linux-x64.2022.3.2.tar.gz \
+            && wget --no-check-certificate \
+                https://download.jetbrains.com/resharper/dotUltimate.2022.3.2/JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -O JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
+            && tar -zxvf JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
+            && rm JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
             && wget --no-check-certificate https://aka.ms/dotnet-counters/linux-x64 -O /usr/bin/dotnet-counters \
             && wget --no-check-certificate https://aka.ms/dotnet-dump/linux-x64 -O /usr/bin/dotnet-dump \
             && wget --no-check-certificate https://aka.ms/dotnet-trace/linux-x64 -O /usr/bin/dotnet-trace \
             && chmod +x /usr/bin/dotnet-counters \
             && chmod +x /usr/bin/dotnet-trace \
             && chmod +x /usr/bin/dotnet-dump \
-	    && apt update -y \ 
-	    && apt install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus \ 
+	    && apt-get update -y \ 
+	    && apt-get install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus \ 
+            && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
 	    && update-locale lang=en_US.UTF-8 \ 
 	    && dpkg-reconfigure --frontend noninteractive locales \ 
 	    && useradd -m -d /home/container -s /bin/bash container \ 
