@@ -1,4 +1,4 @@
-FROM        debian:buster-slim
+FROM        debian:bookworm-slim
 
 COPY        ["./files", "/tmp/files"]
 
@@ -13,21 +13,12 @@ LABEL       org.label-schema.vcs-url="https://github.com/nidaren/docker-images"
 LABEL       org.label-schema.vendor="nidaren"
 LABEL       org.label-schema.version="1.3"
 
-RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-architecture i386 \
-            && echo steam steam/question select "I AGREE" | debconf-set-selections \
-    	    && echo steam steam/license note '' | debconf-set-selections \
+RUN         dpkg --add-architecture i386 \
             && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
-               ca-certificates \
-               libc6 \
-               libgcc1 \
-               libgssapi-krb5-2 \
-               libicu63 \
-               libssl1.1 \
-               libstdc++6 \
-               zlib1g \
-               lib32gcc1 \
-               wget \
-	       locales \
+               ca-certificates libcurl4-gnutls-dev:i386 libcurl4:i386 libcurl3-gnutls:i386 libcurl4 \
+               libc6 lib32gcc-s1 libstdc++6:i386 libicu72 libssl3 libstdc++6 \
+               wget tzdata locales \
+               lib32stdc++6 \
             && useradd -m -d /home/container -s /bin/bash container \
             && wget --no-check-certificate https://aka.ms/dotnet-counters/linux-x64 -O /usr/bin/dotnet-counters \
             && wget --no-check-certificate https://aka.ms/dotnet-dump/linux-x64 -O /usr/bin/dotnet-dump \
@@ -36,7 +27,7 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
             && chmod +x /usr/bin/dotnet-trace \
             && chmod +x /usr/bin/dotnet-dump \
             && wget --no-check-certificate \
-               https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb \
+               https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb \
                -O packages-microsoft-prod.deb \
             && dpkg -i packages-microsoft-prod.deb \
             && rm packages-microsoft-prod.deb \
@@ -50,8 +41,8 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
                 https://download.jetbrains.com/resharper/dotUltimate.2022.3.2/JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -O JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
             && tar -zxvf JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
             && rm JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
-            && apt-get update -y \
-            && apt-get install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus steamcmd \
+            && apt-get update && apt-get upgrade -y \
+            && apt-get install -y --no-install-recommends aspnetcore-runtime-7.0 libgdiplus \
             && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
             && update-locale lang=en_US.UTF-8 \
             && dpkg-reconfigure --frontend noninteractive locales \
@@ -60,9 +51,14 @@ RUN         mv /tmp/files/sources.list /etc/apt/sources.list && dpkg --add-archi
             && mv /tmp/files/libSQLite.Interop.dll.so /usr/lib \
             && mv /tmp/files/entrypoint.sh / \
             && chmod +x /entrypoint.sh \
-            && mkdir -p /home/container/steamcmd \
-            && mkdir -p /home/container/steamapps \
             && mkdir -p /home/container/server \
+            && mkdir -p /home/container/steamapps \
+            && mkdir -p /home/container/steamcmd \
+            && mkdir -p /home/container/.steam/sdk32 \
+            && mkdir -p /home/container/.steam/sdk64 \
+            && wget --no-check-certificate https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz -O steamcmd.tar.gz \
+            && tar -xzvf steamcmd.tar.gz -C /home/container/steamcmd \
+            && rm steamcmd.tar.gz \
             && cd /home/container \
             && chown -R container:container /home/container
 
