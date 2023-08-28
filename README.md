@@ -53,7 +53,7 @@ services:
         source: ./eco-server    # source - location on the host
         target: /home/container/server # target - DON'T modify, location inside container
     environment:
-      VERSION_BRANCH: release # release, playtest, staging - version of the server to download
+      VERSION_BRANCH: release # release, playtest, staging or any other branch present on steam
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
       STEAM_FEEDBACK: false # steamcmd output in console, when false it saves it to Logs/latestSteam.log
     ports:
