@@ -11,7 +11,7 @@ LABEL       org.label-schema.description="Eco Server container by nidaren."
 LABEL       org.label-schema.url="https://discord.nidaren.net"
 LABEL       org.label-schema.vcs-url="https://github.com/nidaren/docker-images"
 LABEL       org.label-schema.vendor="nidaren"
-LABEL       org.label-schema.version="1.3"
+LABEL       org.label-schema.version="1.5"
 
 RUN         dpkg --add-architecture i386 \
             && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
@@ -43,7 +43,7 @@ RUN         dpkg --add-architecture i386 \
             && tar -zxvf JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
             && rm JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
             && apt-get update && apt-get upgrade -y \
-            && apt-get install -y --no-install-recommends aspnetcore-runtime-7.0 \
+            && apt-get install -y --no-install-recommends aspnetcore-runtime-8.0 \
             && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
             && update-locale lang=en_US.UTF-8 \
             && dpkg-reconfigure --frontend noninteractive locales \

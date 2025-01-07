@@ -1,6 +1,0 @@
-{
-  "RecordEvents": true,
-  "PerformanceCounterInterval": 15,
-  "LogLevel": "Information",
-  "DatabaseName": "/mnt/server/Storage/Chronicle"
-}

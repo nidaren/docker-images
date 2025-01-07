@@ -17,7 +17,9 @@ services:
         source: ./eco-server    # source - location on the host
         target: /home/container/server # target - DON'T modify, location inside container
     environment:
-      VERSION_BRANCH: release # release, playtest, staging - version of the server to download
+      SLG_USER: nidaren # Provide your SLG username. Eco 11 servers require full login details.
+      SLG_PASS: PupaDupa12&  # Provide your SLG password. Eco 11 servers require full login details.
+      VERSION_BRANCH: public # Branch names changed in Eco 11! (playtest, staging) version of the server to download
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
       STEAM_FEEDBACK: true # steamcmd output in console, when false it saves it to Logs/latestSteam.log
     ports:

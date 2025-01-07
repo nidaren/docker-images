@@ -113,4 +113,8 @@ MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo -e ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
+if [ -f "$FILE" ]; then
+    echo -e "${YELLOW}Redundant Interlop dll removed from Chronicler.${ENDCOLOR}"
+    rm "$FILE"
+fi
 eval ${MODIFIED_STARTUP}

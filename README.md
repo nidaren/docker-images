@@ -1,5 +1,3 @@
-
-
 # Eco Server Docker Images
 
 ### nidaren/eco-server:environment
@@ -27,7 +25,7 @@ If local server files are present, these will be used.
 * Proper **termination signal handling** - each time `SIGINT`, `SIGTERM` is received by any process, server is saved properly.
 * Fast SteamCMD that remembers its update status within container.
 * Exposes **environmental variables**: 
-  * **`VERSION_BRANCH`** - accepts string: release, playtest, staging - version of the server to download.
+  * **`VERSION_BRANCH`** - accepts string: public - (default), playtest, staging any available version of the server to download.
   * **`UPDATE_SERVER`** - accepts true/false - Checks for server updates on the selected branch before running the Server.
   * **`STEAM_FEEDBACK`** - accepts true/false - steamcmd output in console, when false it saves it to Logs/latestSteam.log.
 
@@ -53,7 +51,9 @@ services:
         source: ./eco-server    # source - location on the host
         target: /home/container/server # target - DON'T modify, location inside container
     environment:
-      VERSION_BRANCH: release # release, playtest, staging or any other branch present on steam
+      SLG_USER: YourUserName # Provide your SLG username. Eco 11 servers require full login details.
+      SLG_PASS: YourSLGPass  # Provide your SLG password. Eco 11 servers require full login details.
+      VERSION_BRANCH: public # Branch names changed in Eco 11! (playtest, staging) version of the server to download
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
       STEAM_FEEDBACK: false # steamcmd output in console, when false it saves it to Logs/latestSteam.log
     ports:
