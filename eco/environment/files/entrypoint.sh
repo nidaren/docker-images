@@ -73,4 +73,4 @@ fi
 cd /home/container/server
 
 echo -e "${BLUE}Server will now start."
-exec ./EcoServer -username="${SLG_USER}" -password="${SLG_PASS}"
+exec ./EcoServer -userToken="${ECO_TOKEN}"
