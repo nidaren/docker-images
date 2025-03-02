@@ -63,7 +63,7 @@ RUN         dpkg --add-architecture i386 \
             && chown -R container:container /home/container
 
 USER        container
-ENV         USER=container HOME=/home/container VERSION_BRANCH=public UPDATE_SERVER=true STEAM_FEEDBACK=false SLG_USER=youruser SLG_PASS=yourpass PATH="${PATH}:/opt/profiling"
+ENV         USER=container HOME=/home/container VERSION_BRANCH=public UPDATE_SERVER=true STEAM_FEEDBACK=false ECO_TOKEN=yourtoken PATH="${PATH}:/opt/profiling"
 
 WORKDIR     /home/container
 

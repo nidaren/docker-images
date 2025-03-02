@@ -25,6 +25,7 @@ If local server files are present, these will be used.
 * Proper **termination signal handling** - each time `SIGINT`, `SIGTERM` is received by any process, server is saved properly.
 * Fast SteamCMD that remembers its update status within container.
 * Exposes **environmental variables**: 
+  * **`ECO_TOKEN`** - accepts string: Eco 11 servers need auth token at login. Can be generated at play.eco website.
   * **`VERSION_BRANCH`** - accepts string: public - (default), playtest, staging any available version of the server to download.
   * **`UPDATE_SERVER`** - accepts true/false - Checks for server updates on the selected branch before running the Server.
   * **`STEAM_FEEDBACK`** - accepts true/false - steamcmd output in console, when false it saves it to Logs/latestSteam.log.
@@ -51,8 +52,7 @@ services:
         source: ./eco-server    # source - location on the host
         target: /home/container/server # target - DON'T modify, location inside container
     environment:
-      SLG_USER: YourUserName # Provide your SLG username. Eco 11 servers require full login details.
-      SLG_PASS: YourSLGPass  # Provide your SLG password. Eco 11 servers require full login details.
+      ECO_TOKEN: YourEcoToken # Provide your Eco Token. Eco 11 servers require auth token at start.
       VERSION_BRANCH: public # Branch names changed in Eco 11! (playtest, staging) version of the server to download
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
       STEAM_FEEDBACK: false # steamcmd output in console, when false it saves it to Logs/latestSteam.log
@@ -63,12 +63,12 @@ services:
       - "3002:3002/tcp" # RconServerPort from Network.eco
 ```
 
-# Pterodactyl
+# Pterodactyl / Pelican
 
 ### nidaren/pterodactyl:eco-chronicler
 
 Images in this set are designed to work with 
-*Pterodactyl hosting environment* and not suitable to run without it. 
+*Pterodactyl / Pelican hosting environment* and not suitable to run without it. 
 
 This docker image is designed to be used with *Eco egg* 
 available in Pterodactyl eggs library *by default*.<br>
