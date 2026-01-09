@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   eco-server-environment:
     container_name: eco-server-env
@@ -17,8 +15,8 @@ services:
         source: ./eco-server    # source - location on the host
         target: /home/container/server # target - DON'T modify, location inside container
     environment:
-      ECO_TOKEN: YourEcoToken # Provide your Eco Token. Eco 11 servers require auth token at start.
-      VERSION_BRANCH: public # Branch names changed in Eco 11! (playtest, staging) version of the server to download
+      ECO_TOKEN: YourEcoToken # Provide your Eco Token. Eco servers require auth token at start.
+      VERSION_BRANCH: public # Branch names changed in recent versions of Eco! (playtest, staging) version of the server to download
       UPDATE_SERVER: true # Checks for server updates on the selected branch before running the Server
       STEAM_FEEDBACK: false # steamcmd output in console, when false it saves it to Logs/latestSteam.log
     ports:
