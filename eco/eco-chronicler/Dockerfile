@@ -4,14 +4,15 @@ COPY        ["./files", "/tmp/files"]
 
 ARG         BUILD_DATE
 
-LABEL       org.label-schema.schema-version="1.0"
-LABEL       org.label-schema.build-date=$BUILD_DATE
-LABEL       org.label-schema.name="ECO Server"
-LABEL       org.label-schema.description="Eco Server container by nidaren."
-LABEL       org.label-schema.url="https://discord.nidaren.net"
-LABEL       org.label-schema.vcs-url="https://github.com/nidaren/docker-images"
-LABEL       org.label-schema.vendor="nidaren"
-LABEL       org.label-schema.version="1.5"
+LABEL       org.opencontainers.image.created=$BUILD_DATE \
+            org.opencontainers.image.authors="Nidaren" \
+            org.opencontainers.image.url="https://discord.nidaren.net" \
+            org.opencontainers.image.documentation="https://github.com/nidaren/docker-images" \
+            org.opencontainers.image.source="https://github.com/nidaren/docker-images" \
+            org.opencontainers.image.version="1.6" \
+            org.opencontainers.image.vendor="Nidaren" \
+            org.opencontainers.image.title="Eco Server Container for Pterodactyl/Pelican" \
+            org.opencontainers.image.description="Contains environment to run various mods for Eco game server."
 
 RUN         dpkg --add-architecture i386 \
             && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
