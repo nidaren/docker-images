@@ -2,7 +2,7 @@
 
 #
 # Copyright (c) 2021 Matthew Penner
-#
+# Copyright (c) 2026 Nidaren
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
@@ -28,8 +28,14 @@ ENDCOLOR="\e[0m"
 CYAN='\033[0;36m'
 YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
+NICEC="\e[38;5;219m"
+NICEC2="\e[38;5;223m"
 
-FILE=/home/container/Mods/Chronicler/SQLite.Interop.dll
+fix_interop() {
+  echo -e "${YELLOW}Checking for${ENDCOLOR} ${GREEN}incompatible${ENDCOLOR} ${YELLOW}files.${ENDCOLOR}"
+  find "$HOME" -type f -name "SQLite.Interop.dll" \
+    -exec sh -c 'echo "Deleting incompatible: $1"; rm "$1"' _ {} \;
+}
 
 # Wait for the container to fully initialize
 sleep 1
@@ -113,8 +119,16 @@ MODIFIED_STARTUP=$(echo -e ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
 echo -e ":/home/container$ ${MODIFIED_STARTUP}"
 
 # Run the Server
-if [ -f "$FILE" ]; then
-    echo -e "${YELLOW}Redundant Interlop dll removed from Chronicler.${ENDCOLOR}"
-    rm "$FILE"
-fi
+NID_DEB=$(. /etc/os-release; echo "$NAME")
+NID_DEBVER=$(cat /etc/debian_version)
+NID_DEBEDI=$(. /etc/os-release; echo "$VERSION_CODENAME")
+
+echo -e "${YELLOW}=======================================================${ENDCOLOR}"
+echo -e "Container's OS:     ${GREEN}${NID_DEB}${ENDCOLOR} ${NICE2}${NID_DEBEDI^}${ENDCOLOR}${NICEC} ${NID_DEBVER}${ENDCOLOR}"
+echo -e "Container's Layout: by ${GREEN}nidaren (c) 2026${ENDCOLOR}"
+echo -e "Support link:       ${NICEC}https://discord.nidaren.net${ENDCOLOR}"
+echo -e "${YELLOW}=======================================================${ENDCOLOR}"
+fix_interop
+
+echo -e "${NICEC}Server will now start.${ENDCOLOR}"
 eval ${MODIFIED_STARTUP}
