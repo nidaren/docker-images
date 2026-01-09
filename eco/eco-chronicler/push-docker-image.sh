@@ -1,1 +1,1 @@
-docker push nidaren/pterodactyl:eco-chronicler-staging
+docker push nidaren/pterodactyl:eco-chronicler
