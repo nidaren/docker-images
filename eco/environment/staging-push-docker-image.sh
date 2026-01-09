@@ -1,1 +1,1 @@
-docker push nidaren/eco-server:environment
+docker push nidaren/eco-server:environment-staging
