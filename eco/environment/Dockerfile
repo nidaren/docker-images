@@ -1,4 +1,4 @@
-FROM        debian:bookworm-slim
+FROM        debian:trixie-slim
 
 COPY        ["./files", "/tmp/files"]
 
@@ -9,7 +9,7 @@ LABEL       org.opencontainers.image.created=$BUILD_DATE \
             org.opencontainers.image.url="https://discord.nidaren.net" \
             org.opencontainers.image.documentation="https://github.com/nidaren/docker-images" \
             org.opencontainers.image.source="https://github.com/nidaren/docker-images" \
-            org.opencontainers.image.version="1.6" \
+            org.opencontainers.image.version="1.7" \
             org.opencontainers.image.vendor="Nidaren" \
             org.opencontainers.image.title="Eco Server Container" \
             org.opencontainers.image.description="Contains environment to run various mods for Eco game server."
@@ -17,7 +17,7 @@ LABEL       org.opencontainers.image.created=$BUILD_DATE \
 RUN         dpkg --add-architecture i386 \
             && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
                ca-certificates libcurl4-gnutls-dev:i386 libcurl4:i386 libcurl3-gnutls:i386 libcurl4 \
-               libc6 lib32gcc-s1 libstdc++6:i386 libicu72 libssl3 libstdc++6 \
+               libc6 lib32gcc-s1 libgcc-s1 libstdc++6:i386 zlib1g libssl3 libstdc++6 \
                wget tzdata locales \
                lib32stdc++6 \
             && useradd -m -d /home/container -s /bin/bash container \
@@ -28,7 +28,7 @@ RUN         dpkg --add-architecture i386 \
             && chmod +x /usr/bin/dotnet-trace \
             && chmod +x /usr/bin/dotnet-dump \
             && wget --no-check-certificate \
-               https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb \
+               https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb \
                -O packages-microsoft-prod.deb \
             && dpkg -i packages-microsoft-prod.deb \
             && rm packages-microsoft-prod.deb \
@@ -43,7 +43,7 @@ RUN         dpkg --add-architecture i386 \
             && tar -zxvf JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz -C /opt/profiling \
             && rm JetBrains.dotMemory.Console.linux-x64.2022.3.2.tar.gz \
             && apt-get update && apt-get upgrade -y \
-            && apt-get install -y --no-install-recommends aspnetcore-runtime-8.0 libgdiplus \
+            && apt-get install -y --no-install-recommends aspnetcore-runtime-10.0 libgdiplus \
             && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
             && update-locale lang=en_US.UTF-8 \
             && dpkg-reconfigure --frontend noninteractive locales \
